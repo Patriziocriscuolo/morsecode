@@ -1,7 +1,6 @@
 import time
 
 import pyvisa
-from PySide6 import QtWidgets
 
 # Create a ResourceManager instance to manage VISA resources
 rm = pyvisa.ResourceManager("@py")
