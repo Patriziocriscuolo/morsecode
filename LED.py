@@ -35,10 +35,12 @@ def lang(device):
     time.sleep(0.3)
 
 
+
+
 class text:
     def __init__(self):
         self.device = rm.open_resource(
-            "ASRL11::INSTR", read_termination="\r\n", write_termination="\n"
+            "ASRL8::INSTR", read_termination="\r\n", write_termination="\n"
         )
 
         # Morse-code vertaling (A-Z, 0-9) met "kort" voor punt en "lang" voor streep
@@ -92,9 +94,6 @@ class text:
                         kort(self.device)
                     elif woord == "lang":
                         lang(self.device)
-                time.sleep(0.5)
+                time.sleep(0.4)
                 self.device.write("")
-                time.sleep(1)
-
-
-
+                time.sleep(0.6)

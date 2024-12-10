@@ -17,19 +17,19 @@ def list_resources():
     return port
 
 
-device = rm.open_resource(
-    "ASRL13::INSTR", read_termination="\r\n", write_termination="\n"
-)
+def meet_LDR():
+    LDR = rm.open_resource(
+        "ASRL13::INSTR", read_termination="\r\n", write_termination="\n"
+    )
+    # meer licht is minder weerstrand, V = IR, dus de I wordt groter en V kleiner, meet V
+    LDR.query("OUT:CH0 1023")
+    ADC_res = int(LDR.query("MEAS:CH2?"))  # meet ADC voor resistor
+    ADC_tot = int(LDR.query("MEAS:CH1?"))  # meet ADC voor alles
+    voltage_LDR = (ADC_tot - ADC_res) / 1023 * 3.3
+    print(voltage_LDR)
+
+    # als LED aan staat is LDR ongeveer 2.087096774193548
+    # als LED uit staat is LDR ongeveer 2.7806451612903227
 
 
-def get_output_value():
-    """Get the value at which the arduino was previously set
-
-    Returns:
-        int: ADC value at which arduino was set
-    """
-    set_value = device.query("OUT:CH0?")
-    return set_value
-
-
-print(get_output_value())
+meet_LDR()
